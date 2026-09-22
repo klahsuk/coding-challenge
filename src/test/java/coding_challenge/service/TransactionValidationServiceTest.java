@@ -39,7 +39,7 @@ class TransactionValidationServiceTest {
         var result = transactionValidationService.validateTransaction(csv);
         assertTrue(result.transaction().isEmpty());
         assertEquals("Unsupported Currency : " + csv.currency()
-                + "\n Supported Currencies: EUR and USD", result.errorMessage());
+                + " -> Supported Currencies: EUR and USD", result.errorMessage());
     }
 }
 

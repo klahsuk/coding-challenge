@@ -33,7 +33,7 @@ public class TransactionValidationService {
 
             if (!SUPPORTED_CURRENCIES.contains(currency)) {
                 throw new InvalidCurrencyException("Unsupported Currency : " + currency
-                        + "\n Supported Currencies: EUR and USD");
+                        + " -> Supported Currencies: EUR and USD");
             }
 
             RiskLevel riskLevel = measureRisk(amountInCents);
