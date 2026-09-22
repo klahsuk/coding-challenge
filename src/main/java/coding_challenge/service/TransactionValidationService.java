@@ -1,5 +1,6 @@
 package coding_challenge.service;
 
+import coding_challenge.exception.InvalidCurrencyException;
 import coding_challenge.exception.InvalidTransactionException;
 import coding_challenge.model.*;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class TransactionValidationService {
             Currency currency = Currency.getInstance(csv.currency());
 
             if (!SUPPORTED_CURRENCIES.contains(currency)) {
-                throw new InvalidTransactionException("Unsupported Currency : " + currency
+                throw new InvalidCurrencyException("Unsupported Currency : " + currency
                         + "\n Supported Currencies: EUR and USD");
             }
 
@@ -48,7 +49,7 @@ public class TransactionValidationService {
             );
 
             return TransactionValidationResult.success(transaction);
-        } catch (InvalidTransactionException | IllegalArgumentException e) {
+        } catch (InvalidTransactionException | InvalidCurrencyException | IllegalArgumentException e) {
             return TransactionValidationResult.failure(e.getMessage());
         }
 

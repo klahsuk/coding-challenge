@@ -3,7 +3,7 @@ package coding_challenge.model;
 import java.util.Optional;
 
 public record TransactionValidationResult(
-        Optional<Transaction> transaction, //instead return a TransFail? inheritance
+        Optional<Transaction> transaction, //instead return a TransFail? inheritance??
         String errorMessage
 ) {
 
