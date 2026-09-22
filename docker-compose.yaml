@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  payment-batch:
+    build: .
+    container_name: payment-batch
+    volumes:
+      - ./input:/app/input
+      - ./output:/app/output
+    ports:
+      - "8080:8080"
