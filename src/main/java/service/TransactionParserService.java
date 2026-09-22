@@ -5,6 +5,7 @@ import coding_challenge.model.TransactionParseResult;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @Component
 public class TransactionParserService {
@@ -23,6 +24,11 @@ public class TransactionParserService {
             return TransactionParseResult.failure("One or more fields are empty", str);
         }
 
+        if (Arrays.stream(fields).anyMatch(Objects::isNull)) {
+            return TransactionParseResult.failure("fields cannot be null", str);
+        }
+
+
         try {
             TransactionCsv csv = new TransactionCsv(
                     fields[0].trim(), //id
@@ -32,8 +38,6 @@ public class TransactionParserService {
                     fields[4].trim(), //currency
                     fields[5].trim()  //reference
             );
-
-            System.out.println(csv);
 
             return TransactionParseResult.success(csv);
         } catch (Exception e) {

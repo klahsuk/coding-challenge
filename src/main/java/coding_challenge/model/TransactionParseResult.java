@@ -5,15 +5,14 @@ import java.util.Optional;
 public record TransactionParseResult(
         Optional<TransactionCsv> transactionCsv,
         String errorMessage,
-        String rawLine,
-        boolean isSuccess
+        String rawLine
 ) {
 
     public static TransactionParseResult success(TransactionCsv csv) {
-        return new TransactionParseResult(Optional.of(csv), null, null, true);
+        return new TransactionParseResult(Optional.of(csv), null, null);
     }
 
     public static TransactionParseResult failure(String errorMessage, String rawLine) {
-        return new TransactionParseResult(Optional.empty(), errorMessage, rawLine, false);
+        return new TransactionParseResult(Optional.empty(), errorMessage, rawLine);
     }
 }

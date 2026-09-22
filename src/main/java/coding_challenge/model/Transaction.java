@@ -1,14 +1,12 @@
 package coding_challenge.model;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 import java.util.Currency;
 
 @Entity
 public class Transaction {
+    @Id
     private Long id;
     private String recipientName;
     @Embedded

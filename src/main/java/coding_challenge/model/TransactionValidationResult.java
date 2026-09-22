@@ -4,15 +4,14 @@ import java.util.Optional;
 
 public record TransactionValidationResult(
         Optional<Transaction> transaction, //instead return a TransFail? inheritance
-        String errorMessage,
-        boolean isSuccess
+        String errorMessage
 ) {
 
     public static TransactionValidationResult success(Transaction tx) {
-        return new TransactionValidationResult(Optional.of(tx), null, true);
+        return new TransactionValidationResult(Optional.of(tx), null);
     }
 
     public static TransactionValidationResult failure(String errorMessage) {
-        return new TransactionValidationResult(Optional.empty(), errorMessage,false);
+        return new TransactionValidationResult(Optional.empty(), errorMessage);
     }
 }

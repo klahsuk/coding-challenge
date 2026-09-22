@@ -2,19 +2,19 @@ package coding_challenge.model;
 
 public class TransactionCsv {
     private String id;
-    private String recepientName;
+    private String recipientName;
     private String recipientIban;
     private String amount;
     private String currency;
     private String paymentReference;
 
     public TransactionCsv(
-            String id, String recepientName,
+            String id, String recipientName,
             String recipientIban, String amount,
             String currency, String paymentReference
     ) {
         this.id = id;
-        this.recepientName = recepientName;
+        this.recipientName = recipientName;
         this.recipientIban = recipientIban;
         this.amount = amount;
         this.currency = currency;
@@ -26,7 +26,7 @@ public class TransactionCsv {
     }
 
     public String getRecepientName() {
-        return recepientName;
+        return recipientName;
     }
 
     public String getRecipientIban() {
