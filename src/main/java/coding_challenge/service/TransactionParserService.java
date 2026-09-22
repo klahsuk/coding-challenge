@@ -1,4 +1,4 @@
-package service;
+package coding_challenge.service;
 
 import coding_challenge.model.TransactionCsv;
 import coding_challenge.model.TransactionParseResult;

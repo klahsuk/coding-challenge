@@ -1,4 +1,4 @@
-package service;
+package coding_challenge.service;
 
 import coding_challenge.model.Transaction;
 import coding_challenge.repository.TransactionRepository;

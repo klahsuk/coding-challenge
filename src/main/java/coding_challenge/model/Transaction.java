@@ -35,4 +35,7 @@ public class Transaction {
         this.riskLevel = riskLevel;
     }
 
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
 }
