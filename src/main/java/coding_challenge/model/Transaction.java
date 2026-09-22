@@ -17,6 +17,10 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private RiskLevel riskLevel;
 
+    public Transaction(){
+        super();
+    }
+
     public Transaction(
             Long id, String recipientName, IBAN recipientIban,
             int amountInCents, Currency currency,
@@ -30,4 +34,5 @@ public class Transaction {
         this.paymentReference = paymentReference;
         this.riskLevel = riskLevel;
     }
+
 }

@@ -17,18 +17,18 @@ public class TransactionValidationService {
 
     TransactionValidationResult validateTransaction(TransactionCsv csv) {
         try {
-            long id = Long.parseLong(csv.getId());
+            long id = Long.parseLong(csv.id());
             if(id < 0) {
                 throw new InvalidTransactionException("Transaction ID cannot be negative : " + id);
             }
 
-            int amountInCents = (int) (Float.parseFloat(csv.getAmount()) * 100);
-            if (amountInCents < 0) {
-                throw new InvalidTransactionException("Transaction amount cannot be negative : " + amountInCents);
+            int amountInCents = (int) (Float.parseFloat(csv.amount()) * 100);
+            if (amountInCents <= 0) {
+                throw new InvalidTransactionException("Transaction amount has to be more than 0 : " + amountInCents);
             }
 
-            IBAN recipientIban = new IBAN(csv.getRecipientIban());
-            Currency currency = Currency.getInstance(csv.getCurrency());
+            IBAN recipientIban = new IBAN(csv.recipientIban());
+            Currency currency = Currency.getInstance(csv.currency());
 
             if (!SUPPORTED_CURRENCIES.contains(currency)) {
                 throw new InvalidTransactionException("Unsupported Currency : " + currency
@@ -39,11 +39,11 @@ public class TransactionValidationService {
 
             Transaction transaction = new Transaction(
                     id,
-                    csv.getRecepientName(),
+                    csv.recipientName(),
                     recipientIban,
                     amountInCents,
                     currency,
-                    csv.getPaymentReference(),
+                    csv.paymentReference(),
                     riskLevel
             );
 
