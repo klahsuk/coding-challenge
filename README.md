@@ -86,11 +86,3 @@ payment_id,recipient_name,recipient_iban,amount,currency,payment_reference,statu
 ```
 
 Successful rows contain `PASS` and a risk profile. Failed rows contain `FAIL`, an empty risk profile, and the reason for failure.
-
-## Testing
-
-Run all tests with:
-
-```bash
-./mvnw test
-```
