@@ -9,3 +9,6 @@
 1. Code needs more tests (Unit and Integration)
 2. Controller if a REST API is needed 
 3. Adding a CREDIT/DEBIT type would make sense given that the direction of transaction is not clear
+4. Recipient class {name, iban}
+5. Transactional for safe rollbacks
+6. 
