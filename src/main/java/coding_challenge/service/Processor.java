@@ -4,6 +4,7 @@ import coding_challenge.csv.CsvReader;
 import coding_challenge.csv.CsvWriter;
 import coding_challenge.model.ProcessResult;
 import coding_challenge.model.Transaction;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,28 +38,24 @@ public class Processor {
         List<Transaction> validTransactions = new ArrayList<>();
         List<ProcessResult> results = new ArrayList<>();
 
-        for (String line : reader.readTransactions()) {
-            if (line.isBlank() || line.equalsIgnoreCase(
-                    "payment_id,recipient_name,recipient_iban,amount,currency,payment_reference")) {
-                continue;
-            }
+        for (CSVRecord record : reader.readTransactions()) {
 
-            var parseResult = transactionParserService.parseCsv(line);
+            var parseResult = transactionParserService.parseCsv(record);
             if (parseResult.transactionCsv().isEmpty()) {
-                results.add(ProcessResult.failure(line, parseResult.errorMessage()));
+                results.add(ProcessResult.failure(record.toString(), parseResult.errorMessage()));
                 continue;
             }
 
             var validationResult =
                     transactionValidationService.validateTransaction(parseResult.transactionCsv().get());
             if (validationResult.transaction().isEmpty()) {
-                results.add(ProcessResult.failure(line, validationResult.errorMessage()));
+                results.add(ProcessResult.failure(record.toString(), validationResult.errorMessage()));
                 continue;
             }
 
             Transaction transaction = validationResult.transaction().get();
             validTransactions.add(transaction);
-            results.add(ProcessResult.success(line, transaction.getRiskLevel()));
+            results.add(ProcessResult.success(record.toString(), transaction.getRiskLevel()));
         }
 
         transactionService.saveAll(validTransactions);

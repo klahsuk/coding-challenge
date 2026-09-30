@@ -2,6 +2,7 @@ package coding_challenge.service;
 
 import coding_challenge.model.TransactionCsv;
 import coding_challenge.model.TransactionParseResult;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -10,38 +11,28 @@ import java.util.Objects;
 @Component
 public class TransactionParserService {
 
-    TransactionParseResult parseCsv(String str) {
-        if (str == null || str.isBlank()) {
-            return TransactionParseResult.failure("Row not found or was empty", str);
-        }
+    TransactionParseResult parseCsv(CSVRecord record) {
 
-        String[] fields = str.split(",", -1);
-        if (fields.length != 6) {
-            return TransactionParseResult.failure("Missing columns. Expected 6, got " + fields.length, str);
-        }
-
-        if (Arrays.stream(fields).anyMatch(String::isBlank)) {
-            return TransactionParseResult.failure("One or more fields are empty", str);
-        }
-
-        if (Arrays.stream(fields).anyMatch(Objects::isNull)) {
-            return TransactionParseResult.failure("fields cannot be null", str);
-        }
-
+        String id = record.get("payment_id");
+        String recipientName = record.get("recipient_name");
+        String recipientIban = record.get("recipient_iban");
+        String amount = record.get("amount");
+        String currency = record.get("currency");
+        String paymentReference = record.get("payment_reference");
 
         try {
             TransactionCsv csv = new TransactionCsv(
-                    fields[0].trim(), //id
-                    fields[1].trim(), //name
-                    fields[2].trim(), //iban
-                    fields[3].trim(), //amount
-                    fields[4].trim(), //currency
-                    fields[5].trim()  //reference
+                    id,
+                    recipientName,
+                    recipientIban,
+                    amount,
+                    currency,
+                    paymentReference
             );
 
             return TransactionParseResult.success(csv);
         } catch (Exception e) {
-            return TransactionParseResult.failure(e.getMessage(), str);
+            return TransactionParseResult.failure(e.getMessage(), record.toString());
         }
     }
 

@@ -23,7 +23,7 @@ public class TransactionValidationService {
                 throw new InvalidTransactionException("Transaction ID cannot be negative : " + id);
             }
 
-            int amountInCents = (int) (Float.parseFloat(csv.amount()) * 100);
+            int amountInCents = (int) Math.floor(Float.parseFloat(csv.amount()) * 100f);
             if (amountInCents <= 0) {
                 throw new InvalidTransactionException("Transaction amount has to be more than 0 : " + amountInCents);
             }

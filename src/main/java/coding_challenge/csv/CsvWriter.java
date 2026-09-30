@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+
+//csv writer needs to be adapted to deal with csv records instead
 @Component
 public class CsvWriter {
     private static final String OUTPUT_HEADER =
@@ -28,6 +30,7 @@ public class CsvWriter {
             Files.createDirectories(parent);
         }
 
+        //try with resources closes writer automatically
         try (BufferedWriter writer = Files.newBufferedWriter(outputFile, StandardCharsets.UTF_8)) {
             writer.write(OUTPUT_HEADER);
             writer.newLine();
@@ -36,7 +39,7 @@ public class CsvWriter {
                 writer.write(',');
                 writer.write(result.status().name());
                 writer.write(',');
-                writer.write(result.riskProfile() == null ? "" : result.riskProfile().name());
+                writer.write(result.riskProfile() == null ? "" : result.riskProfile().name()); //name gives the enum str
                 writer.write(',');
                 writer.write(escape(result.reason()));
                 writer.newLine();
