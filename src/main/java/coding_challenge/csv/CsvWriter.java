@@ -1,6 +1,8 @@
 package coding_challenge.csv;
 
 import coding_challenge.model.ProcessResult;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -30,30 +32,21 @@ public class CsvWriter {
             Files.createDirectories(parent);
         }
 
-        //try with resources closes writer automatically
-        try (BufferedWriter writer = Files.newBufferedWriter(outputFile, StandardCharsets.UTF_8)) {
-            writer.write(OUTPUT_HEADER);
-            writer.newLine();
+        try (BufferedWriter writer = Files.newBufferedWriter(outputFile, StandardCharsets.UTF_8);
+             CSVPrinter csvPrinter = new CSVPrinter(writer,
+                     CSVFormat.DEFAULT.builder()
+                             .setHeader(OUTPUT_HEADER)
+                             .get())) {
+
             for (ProcessResult result : results) {
-                writer.write(result.rawLine());
-                writer.write(',');
-                writer.write(result.status().name());
-                writer.write(',');
-                writer.write(result.riskProfile() == null ? "" : result.riskProfile().name()); //name gives the enum str
-                writer.write(',');
-                writer.write(escape(result.reason()));
-                writer.newLine();
+              csvPrinter.printRecord(
+                      result.rawLine(),
+                      result.status().name(),
+                      result.riskProfile() == null ? "" : result.riskProfile().name(),
+                      result.reason() == null ? "" : result.reason()
+              );
             }
         }
     }
 
-    private String escape(String value) {
-        if (value == null || value.isEmpty()) {
-            return "";
-        }
-        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
-            return "\"" + value.replace("\"", "\"\"") + "\"";
-        }
-        return value;
-    }
 }

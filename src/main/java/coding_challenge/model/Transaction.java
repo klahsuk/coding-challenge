@@ -38,4 +38,8 @@ public class Transaction {
     public RiskLevel getRiskLevel() {
         return riskLevel;
     }
+
+    public int getAmountInCents() {
+        return amountInCents;
+    }
 }

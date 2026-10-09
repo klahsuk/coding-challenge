@@ -18,6 +18,14 @@ class TransactionValidationServiceTest {
     TestUtils utils = new TestUtils();
 
     @Test
+    void parsingAmountiscalculatedForTwoDecimalPlaces(){
+        TransactionCsv csv = utils.transactionCsv();
+        var result = transactionValidationService.validateTransaction(csv);
+        assertTrue(result.transaction().isPresent());
+        assertEquals(10024, result.transaction().get().getAmountInCents());
+    }
+
+    @Test
     void parsingValidTransactionCsvReturnsTransactionValidtaionResult(){
         TransactionCsv csv = utils.transactionCsv();
         var result = transactionValidationService.validateTransaction(csv);

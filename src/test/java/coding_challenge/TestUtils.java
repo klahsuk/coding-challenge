@@ -12,7 +12,7 @@ public class TestUtils {
                 "1000001",
                 "Recipient 1000001",
                 "DE00000000000000100503",
-                "100.25",
+                "100.249",
                 "USD",
                 "Invoice 100503"
                 );
